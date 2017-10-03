@@ -1,6 +1,16 @@
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
-</div>
+<md-toolbar color="primary">
+  <span>Binary Number Game</span>
+</md-toolbar>
 
+<div id="content">
+  <md-card>
+    <md-tab-group>
+      <md-tab label="Demo">
+        <bng-demo-view></bng-demo-view>
+      </md-tab>
+      <md-tab label="Game">
+        <bng-game-view></bng-game-view>
+      </md-tab>
+    </md-tab-group>
+  </md-card>
+</div>
