@@ -19,6 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "bng",
       "styles": [
+        "../node_modules/normalize.css/normalize.css",
         "styles.css"
       ],
       "scripts": [],
