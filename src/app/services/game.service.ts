@@ -1,13 +1,24 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class GameService {
-  private _currentNumber: BehaviorSubject<number> = new BehaviorSubject(-1);
+  private _limit = 256;
 
-  public currentNumber: Observable<number> = this._currentNumber.asObservable();
+  public currentNumber: BehaviorSubject<number> = new BehaviorSubject(-1);
+  public isRunning: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor() {
+  }
+
+  public startGame() {
+    this.isRunning.next(true);
+    this.nextNumber();
+  }
+
+  public nextNumber() {
+    if (this.isRunning.getValue()) {
+      this.currentNumber.next(Math.floor(Math.random() * this._limit));
+    }
   }
 }
