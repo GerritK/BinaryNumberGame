@@ -1,0 +1,5 @@
+<p>
+  <md-button-toggle-group multiple>
+    <md-button-toggle *ngFor="let bit of bits" (change)="bit.selected = !bit.selected; onChange()" [checked]="bit.selected">{{bit.value}}</md-button-toggle>
+  </md-button-toggle-group>
+</p>

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'bng-demo-view',
@@ -6,5 +6,5 @@ import {Component} from '@angular/core';
   styleUrls: ['./demo-view.component.css']
 })
 export class DemoViewComponent {
-
+  public currentNumber: number;
 }

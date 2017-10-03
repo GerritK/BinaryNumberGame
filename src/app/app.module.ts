@@ -1,9 +1,11 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule} from '@angular/forms';
 import {MatToolbarModule} from '@angular/material';
 import {MatCardModule} from '@angular/material';
 import {MatTabsModule} from '@angular/material';
+import {MatButtonToggleModule} from '@angular/material';
 
 import {AppComponent} from './app.component';
 import {DemoViewComponent} from './views/demo/demo-view.component';
@@ -26,9 +28,11 @@ import {TimerComponent} from './components/timer/timer.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     MatToolbarModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
