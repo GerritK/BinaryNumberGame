@@ -7,6 +7,7 @@ import {GameViewComponent} from './views/game/game-view.component';
 import {BitbarComponent} from './components/bitbar/bitbar.component';
 import {DisplayComponent} from './components/display/display.component';
 import {TimerComponent} from './components/timer/timer.component';
+import {GameService} from './services/game.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,9 @@ import {TimerComponent} from './components/timer/timer.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [
+    GameService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
