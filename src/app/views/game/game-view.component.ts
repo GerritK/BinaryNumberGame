@@ -12,6 +12,10 @@ export class GameViewComponent implements OnInit, OnDestroy {
 
   public number: number;
   public isRunning: boolean;
+  public endOfTime: number;
+  public score: number;
+
+  public userNumber: number;
 
   constructor(private gameService: GameService) {
 
@@ -31,6 +35,18 @@ export class GameViewComponent implements OnInit, OnDestroy {
       .subscribe((isRunning) => {
         this.isRunning = isRunning;
       });
+
+    this.gameService.endOfTime
+      .takeUntil(this._ngDestroy)
+      .subscribe((endOfTime) => {
+        this.endOfTime = endOfTime;
+      });
+
+    this.gameService.score
+      .takeUntil(this._ngDestroy)
+      .subscribe((score) => {
+        this.score = score;
+      });
   }
 
   ngOnDestroy() {
@@ -40,5 +56,14 @@ export class GameViewComponent implements OnInit, OnDestroy {
 
   public startGame() {
     this.gameService.startGame();
+  }
+
+  public checkNumber() {
+    if (this.userNumber === this.number) {
+      setTimeout(() => {
+        this.userNumber = 0;
+        this.gameService.nextNumber();
+      }, 250);
+    }
   }
 }

@@ -1,4 +1,8 @@
-{{number}}
-{{isRunning}}
+<div *ngIf="isRunning">
+  <h1>{{number}}</h1>
+  <br/>
+  <small>Score: {{score}}</small>
+</div>
 
+<bng-bitbar [(value)]="userNumber" (valueChange)="checkNumber()"></bng-bitbar>
 <button md-button (click)="startGame()" [disabled]="isRunning">Start</button>

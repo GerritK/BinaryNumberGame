@@ -7,18 +7,23 @@ export class GameService {
 
   public currentNumber: BehaviorSubject<number> = new BehaviorSubject(-1);
   public isRunning: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public endOfTime: BehaviorSubject<number> = new BehaviorSubject(0);
+  public score: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor() {
   }
 
   public startGame() {
+    this.score.next(0);
     this.isRunning.next(true);
     this.nextNumber();
   }
 
   public nextNumber() {
     if (this.isRunning.getValue()) {
-      this.currentNumber.next(Math.floor(Math.random() * this._limit));
+      this.currentNumber.next(Math.floor(Math.random() * (this._limit - 1)) + 1);
+      this.endOfTime.next(new Date().getTime() + 60 * 1000);
+      this.score.next(this.score.value + 1);
     }
   }
 }
