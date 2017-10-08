@@ -14,7 +14,7 @@ export class GameService {
   }
 
   public startGame() {
-    this.score.next(0);
+    this.score.next(-1);
     this.isRunning.next(true);
     this.nextNumber();
   }
