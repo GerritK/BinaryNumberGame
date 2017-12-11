@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {GameService} from './services/game.service';
 
 @Component({
   selector: 'bng-app-root',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'BinaryNumberGame';
+  constructor(private gameService: GameService) {
+  }
+
+  public onModeChange() {
+    this.gameService.stopGame();
+  }
 }

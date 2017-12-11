@@ -19,6 +19,11 @@ export class GameService {
     this.nextNumber();
   }
 
+  public stopGame() {
+    this.score.next(0);
+    this.isRunning.next(false);
+  }
+
   public nextNumber() {
     if (this.isRunning.getValue()) {
       this.currentNumber.next(Math.floor(Math.random() * (this._limit - 1)) + 1);
