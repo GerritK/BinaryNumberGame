@@ -1,16 +1,16 @@
-<md-toolbar color="primary">
+<mat-toolbar color="primary">
   <span>Binary Number Game</span>
-</md-toolbar>
+</mat-toolbar>
 
 <div id="content">
-  <md-card>
-    <md-tab-group (selectChange)="onModeChange($event)">
-      <md-tab label="Demo">
+  <mat-card>
+    <mat-tab-group (selectChange)="onModeChange($event)">
+      <mat-tab label="Demo">
         <bng-demo-view></bng-demo-view>
-      </md-tab>
-      <md-tab label="Game">
+      </mat-tab>
+      <mat-tab label="Game">
         <bng-game-view></bng-game-view>
-      </md-tab>
-    </md-tab-group>
-  </md-card>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
 </div>
