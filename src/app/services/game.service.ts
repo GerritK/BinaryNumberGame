@@ -43,9 +43,9 @@ export class GameService {
   }
 
   public stopGame() {
+    this.isRunning.next(false);
     this.score.next(0);
     this.remainingTime.next(0);
-    this.isRunning.next(false);
   }
 
   public nextNumber() {
