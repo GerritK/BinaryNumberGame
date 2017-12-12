@@ -1,8 +1,8 @@
-<div *ngIf="isRunning">
-  <h1>{{number}}</h1>
-  <br/>
-  <small>Score: {{score}}</small>
-</div>
+<bng-display [value]="number" [displayType]="'hex'" *ngIf="isRunning"></bng-display>
 
-<bng-bitbar [(value)]="userNumber" (valueChange)="checkNumber()"></bng-bitbar>
+<bng-timer [remainingTime]="remainingTime"></bng-timer>
+
+<bng-bitbar [(value)]="userNumber" [disabled]="!isRunning || correctNumber" (valueChange)="checkNumber()"></bng-bitbar>
+
 <button mat-button (click)="startGame()" [disabled]="isRunning">Start</button>
+<button mat-button (click)="stopGame()" [disabled]="!isRunning">Stop</button>

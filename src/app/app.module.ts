@@ -16,6 +16,8 @@ import {TimerComponent} from './components/timer/timer.component';
 import {GameService} from './services/game.service';
 
 import 'rxjs/add/operator/takeUntil';
+import 'rxjs/add/observable/interval';
+import {MomentModule} from 'angular2-moment';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import 'rxjs/add/operator/takeUntil';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    MomentModule,
+
     MatToolbarModule,
     MatCardModule,
     MatTabsModule,

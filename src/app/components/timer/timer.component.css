@@ -1,0 +1,8 @@
+.alarm {
+  color: #cc0000;
+  animation: blinker 0.5s linear infinite;
+}
+
+@keyframes blinker {
+  50% { opacity: 0; }
+}

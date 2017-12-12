@@ -9,6 +9,8 @@ export class BitbarComponent implements OnChanges {
   @Input('value') value: number;
   @Output('valueChange') valueChange: EventEmitter<number> = new EventEmitter();
 
+  @Input('disabled') disabled: boolean;
+
   public bits = [
     {value: 128, selected: false},
     {value: 64, selected: false},
