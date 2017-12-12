@@ -10,12 +10,12 @@ import {Subject} from 'rxjs/Subject';
 export class GameViewComponent implements OnInit, OnDestroy {
   private _ngDestroy: Subject<any>;
 
-  public number: number;
-  public isRunning: boolean;
+  public number = 0;
+  public isRunning = false;
   public endOfTime: number;
   public score: number;
 
-  public userNumber: number;
+  public userNumber = 0;
 
   constructor(private gameService: GameService) {
 

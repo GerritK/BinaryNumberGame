@@ -6,5 +6,5 @@ import {Component, EventEmitter, Output} from '@angular/core';
   styleUrls: ['./demo-view.component.css']
 })
 export class DemoViewComponent {
-  public currentNumber: number;
+  public currentNumber = 0;
 }
