@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'bng-demo-view',
@@ -7,4 +7,5 @@ import {Component, EventEmitter, Output} from '@angular/core';
 })
 export class DemoViewComponent {
   public currentNumber = 0;
+  public useHex = false;
 }

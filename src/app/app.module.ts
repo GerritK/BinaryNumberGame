@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatButtonModule, MatButtonToggleModule, MatCardModule, MatTabsModule,
+  MatButtonModule, MatButtonToggleModule, MatCardModule, MatSlideToggleModule, MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
 
@@ -18,6 +18,7 @@ import {GameService} from './services/game.service';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/observable/interval';
 import {MomentModule} from 'angular2-moment';
+import {HighscoreService} from './services/highscore.service';
 
 @NgModule({
   declarations: [
@@ -40,10 +41,12 @@ import {MomentModule} from 'angular2-moment';
     MatCardModule,
     MatTabsModule,
     MatButtonToggleModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSlideToggleModule
   ],
   providers: [
-    GameService
+    GameService,
+    HighscoreService
   ],
   bootstrap: [AppComponent]
 })

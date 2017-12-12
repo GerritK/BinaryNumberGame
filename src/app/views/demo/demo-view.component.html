@@ -1,2 +1,7 @@
-<bng-display [value]="currentNumber" [displayType]="'hex'"></bng-display>
+<bng-display [value]="currentNumber" [displayType]="useHex ? 'hex' : 'dec'"></bng-display>
+
+<mat-slide-toggle [(ngModel)]="useHex">
+  {{useHex ? 'Hex' : 'Dec'}}
+</mat-slide-toggle>
+
 <bng-bitbar [(value)]="currentNumber"></bng-bitbar>

@@ -1,8 +1,15 @@
-<bng-display [value]="number" [displayType]="'hex'" *ngIf="isRunning"></bng-display>
+<bng-display *ngIf="mode === 'game'" [value]="number" [displayType]="useHex ? 'hex' : 'dec'"></bng-display>
+<h1 *ngIf="mode === 'highscore'">Highscore: {{highscore}}</h1>
+<h1 *ngIf="mode === 'score'">Your Score: {{endScore}}</h1>
 
-<bng-timer [remainingTime]="remainingTime"></bng-timer>
+<bng-timer *ngIf="mode === 'game'" [remainingTime]="remainingTime"></bng-timer>
+
+<mat-slide-toggle [(ngModel)]="useHex" (ngModelChange)="onUseHexChange($event)" [disabled]="mode !== 'highscore'">
+  {{useHex ? 'Hex' : 'Dec'}}
+</mat-slide-toggle>
 
 <bng-bitbar [(value)]="userNumber" [disabled]="!isRunning || correctNumber" (valueChange)="checkNumber()"></bng-bitbar>
 
-<button mat-button (click)="startGame()" [disabled]="isRunning">Start</button>
-<button mat-button (click)="stopGame()" [disabled]="!isRunning">Stop</button>
+<button mat-button (click)="startGame()" color="primary" *ngIf="mode === 'highscore'">Start</button>
+<button mat-button (click)="stopGame()" color="warn" *ngIf="mode === 'game'">Stop</button>
+<button mat-button (click)="setMode('highscore')" color="primary" *ngIf="mode === 'score'">OK</button>

@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GameService} from '../../services/game.service';
 import {Subject} from 'rxjs/Subject';
+import {HighscoreService} from '../../services/highscore.service';
 
 @Component({
   selector: 'bng-game-view',
@@ -10,19 +11,26 @@ import {Subject} from 'rxjs/Subject';
 export class GameViewComponent implements OnInit, OnDestroy {
   private ngDestroy: Subject<any>;
 
+  public mode: 'highscore' | 'game' | 'score' = 'highscore';
+  public endScore: number;
+
   public number = 0;
   public isRunning = false;
   public remainingTime: number;
   public score: number;
+  public highscore: number;
 
   public userNumber = 0;
-
   public correctNumber = false;
+  public useHex = false;
 
-  constructor(private gameService: GameService) {
+  constructor(private gameService: GameService,
+              private highscoreService: HighscoreService) {
   }
 
   ngOnInit() {
+    this.onUseHexChange(this.useHex);
+
     this.ngDestroy = new Subject();
 
     this.gameService.currentNumber
@@ -36,6 +44,10 @@ export class GameViewComponent implements OnInit, OnDestroy {
       .subscribe((isRunning) => {
         if (this.isRunning !== isRunning) {
           this.userNumber = 0;
+
+          if (!isRunning && this.mode === 'game') {
+            this.setMode('score');
+          }
         }
 
         this.isRunning = isRunning;
@@ -60,10 +72,12 @@ export class GameViewComponent implements OnInit, OnDestroy {
   }
 
   public startGame() {
+    this.setMode('game');
     this.gameService.startGame();
   }
 
   public stopGame() {
+    this.setMode('score');
     this.gameService.stopGame();
   }
 
@@ -77,5 +91,29 @@ export class GameViewComponent implements OnInit, OnDestroy {
         this.correctNumber = false;
       }, 500);
     }
+  }
+
+  public onUseHexChange(useHex) {
+    this.highscore = this.highscoreService.getHighscore(useHex ? 'hex' : 'dec');
+  }
+
+  public setMode(mode: 'highscore' | 'game' | 'score') {
+    switch (mode) {
+      case 'highscore':
+        if (this.mode === 'score') {
+          this.highscoreService.setHighscore(this.endScore, this.useHex ? 'hex' : 'dec');
+        }
+        this.onUseHexChange(this.useHex);
+        break;
+
+      case 'game':
+        break;
+
+      case 'score':
+        this.endScore = this.score;
+        break;
+    }
+
+    this.mode = mode;
   }
 }
