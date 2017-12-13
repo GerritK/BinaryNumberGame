@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {GameService} from './services/game.service';
+import {NavigationStart, Router} from '@angular/router';
 
 @Component({
   selector: 'bng-app-root',
@@ -7,10 +8,24 @@ import {GameService} from './services/game.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private gameService: GameService) {
-  }
+  public navLinks = [
+    {
+      label: 'Demo',
+      path: '/demo',
+    },
+    {
+      label: 'Game',
+      path: '/game',
+    }
+  ];
 
-  public onModeChange() {
-    this.gameService.stopGame();
+  constructor(private gameService: GameService,
+              private router: Router) {
+    // stop running game on route change
+    router.events.subscribe((event) => {
+      if (event instanceof NavigationStart && this.gameService.isRunning.getValue()) {
+        this.gameService.stopGame();
+      }
+    });
   }
 }

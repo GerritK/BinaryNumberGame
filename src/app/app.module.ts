@@ -19,6 +19,7 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/observable/interval';
 import {MomentModule} from 'angular2-moment';
 import {HighscoreService} from './services/highscore.service';
+import {AppRoutingModule} from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,8 @@ import {HighscoreService} from './services/highscore.service';
     BrowserAnimationsModule,
     FormsModule,
     MomentModule,
+
+    AppRoutingModule,
 
     MatToolbarModule,
     MatCardModule,
