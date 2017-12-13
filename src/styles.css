@@ -2,6 +2,14 @@
 
 body {
   margin: 0;
+}
+
+.mat-card, .mat-toolbar .mat-toolbar-row {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+#content {
   text-align: center;
 }
 
