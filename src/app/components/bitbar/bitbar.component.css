@@ -1,0 +1,11 @@
+.bit {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+:host ::ng-deep .mat-button-toggle-label-content {
+  width: 20px;
+  line-height: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}

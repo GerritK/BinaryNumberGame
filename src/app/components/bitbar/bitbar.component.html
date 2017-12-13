@@ -1,11 +1,13 @@
 <p>
   <mat-button-toggle-group multiple [disabled]="disabled">
-    <mat-button-toggle *ngFor="let bit of bits"
+    <mat-button-toggle *ngFor="let bit of bits; let index = index"
                        color="accent"
                        (change)="bit.selected = !bit.selected; onChange()"
                        [checked]="bit.selected"
                        [disabled]="disabled">
-      {{bit.value}}
+      <!--2<sup>{{bits.length - index - 1}}</sup>-->
+      <span class="bit">{{bit.selected ? '1' : '0'}}</span><br/>
+      <small>{{bit.value}}</small>
     </mat-button-toggle>
   </mat-button-toggle-group>
 </p>
