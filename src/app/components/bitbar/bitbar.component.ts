@@ -23,11 +23,13 @@ export class BitbarComponent implements OnChanges {
 
   @HostListener('body:keyup', ['$event'])
   onKeyDown(event) {
-    const value = Number.parseInt(event.key, 10);
-    if (value != null && this.bits[value - 1] != null) {
-      this.bits[value - 1].selected = !this.bits[value - 1].selected;
+    if (!this.disabled) {
+      const value = Number.parseInt(event.key, 10);
+      if (value != null && this.bits[value - 1] != null) {
+        this.bits[value - 1].selected = !this.bits[value - 1].selected;
 
-      this.onChange();
+        this.onChange();
+      }
     }
   }
 
