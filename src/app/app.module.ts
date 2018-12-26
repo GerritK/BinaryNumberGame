@@ -15,8 +15,6 @@ import {DisplayComponent} from './components/display/display.component';
 import {TimerComponent} from './components/timer/timer.component';
 import {GameService} from './services/game.service';
 
-import 'rxjs/add/operator/takeUntil';
-import 'rxjs/add/observable/interval';
 import {MomentModule} from 'angular2-moment';
 import {HighscoreService} from './services/highscore.service';
 import {AppRoutingModule} from './app-routing.module';

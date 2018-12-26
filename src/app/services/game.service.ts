@@ -1,8 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
-import {HighscoreService} from './highscore.service';
+import {Subscription, BehaviorSubject, interval} from 'rxjs';
 
 @Injectable()
 export class GameService {
@@ -35,7 +32,7 @@ export class GameService {
     this.isRunning.next(true);
 
     if (this.remainingTimerSub == null) {
-      this.remainingTimerSub = Observable.interval(250)
+      this.remainingTimerSub = interval(250)
         .subscribe(() => this.calculateRemainingTime());
     }
 

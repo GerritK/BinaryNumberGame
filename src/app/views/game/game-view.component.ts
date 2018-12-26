@@ -1,7 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GameService} from '../../services/game.service';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 import {HighscoreService} from '../../services/highscore.service';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'bng-game-view',
@@ -34,13 +35,17 @@ export class GameViewComponent implements OnInit, OnDestroy {
     this.ngDestroy = new Subject();
 
     this.gameService.currentNumber
-      .takeUntil(this.ngDestroy)
+      .pipe(
+        takeUntil(this.ngDestroy)
+      )
       .subscribe((number) => {
         this.number = number;
       });
 
     this.gameService.isRunning
-      .takeUntil(this.ngDestroy)
+      .pipe(
+        takeUntil(this.ngDestroy)
+      )
       .subscribe((isRunning) => {
         if (this.isRunning !== isRunning) {
           this.userNumber = 0;
@@ -54,13 +59,17 @@ export class GameViewComponent implements OnInit, OnDestroy {
       });
 
     this.gameService.remainingTime
-      .takeUntil(this.ngDestroy)
+      .pipe(
+        takeUntil(this.ngDestroy)
+      )
       .subscribe((remainingTime) => {
         this.remainingTime = remainingTime;
       });
 
     this.gameService.score
-      .takeUntil(this.ngDestroy)
+      .pipe(
+        takeUntil(this.ngDestroy)
+      )
       .subscribe((score) => {
         this.score = score;
       });
