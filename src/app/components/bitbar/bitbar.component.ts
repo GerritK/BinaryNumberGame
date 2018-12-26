@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'bng-bitbar',
@@ -6,10 +6,9 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '
   styleUrls: ['./bitbar.component.css']
 })
 export class BitbarComponent implements OnChanges {
-  @Input('value') value: number;
-  @Output('valueChange') valueChange: EventEmitter<number> = new EventEmitter();
-
-  @Input('disabled') disabled: boolean;
+  @Input() value: number;
+  @Output() valueChange: EventEmitter<number> = new EventEmitter();
+  @Input() disabled: boolean;
 
   public bits = [
     {value: 128, selected: false},
@@ -21,6 +20,16 @@ export class BitbarComponent implements OnChanges {
     {value: 2, selected: false},
     {value: 1, selected: false},
   ];
+
+  @HostListener('body:keyup', ['$event'])
+  onKeyDown(event) {
+    const value = Number.parseInt(event.key, 10);
+    if (value != null && this.bits[value - 1] != null) {
+      this.bits[value - 1].selected = !this.bits[value - 1].selected;
+
+      this.onChange();
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.value != null) {

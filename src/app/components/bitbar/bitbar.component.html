@@ -1,7 +1,6 @@
 <p>
   <mat-button-toggle-group multiple [disabled]="disabled">
     <mat-button-toggle *ngFor="let bit of bits; let index = index"
-                       color="accent"
                        (change)="bit.selected = !bit.selected; onChange()"
                        [checked]="bit.selected"
                        [disabled]="disabled">
