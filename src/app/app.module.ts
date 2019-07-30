@@ -15,7 +15,7 @@ import {DisplayComponent} from './components/display/display.component';
 import {TimerComponent} from './components/timer/timer.component';
 import {GameService} from './services/game.service';
 
-import {MomentModule} from 'angular2-moment';
+import {MomentModule} from 'ngx-moment';
 import {HighscoreService} from './services/highscore.service';
 import {AppRoutingModule} from './app-routing.module';
 
