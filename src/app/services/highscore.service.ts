@@ -4,6 +4,7 @@ import {Observable, of} from 'rxjs';
 import {flatMap, map} from 'rxjs/operators';
 import {MatDialog} from '@angular/material';
 import {UsernameDialogComponent} from '../dialogs/username-dialog/username-dialog.component';
+import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Injectable()
 export class HighscoreService {
@@ -11,7 +12,12 @@ export class HighscoreService {
   private static readonly CLIENT_ID = 'fI3t9G0dZTdm0z85umwHpRsxOkPE7JdmrhPBXPOW';
   private static readonly CLIENT_SECRET = '1jJBsO5OlNedfM1ABGHkU4MbTn9Jb5sdpbPR0VGl';
 
-  private highscores: any = {};
+  private readonly highscores$: BehaviorSubject<any> = new BehaviorSubject<any>({
+    dec: 0,
+    hex: 0
+  });
+  public readonly highscores: Observable<any> = this.highscores$.asObservable();
+
   private token: string;
 
   constructor(private http: HttpClient,
@@ -19,19 +25,20 @@ export class HighscoreService {
     this.loadHighscore();
   }
 
-  public getHighscore(mode: 'dec' | 'hex') {
-    if (this.highscores[mode] != null) {
-      return this.highscores[mode];
-    }
-
-    return 0;
+  public getHighscore(mode: 'dec' | 'hex'): Observable<number> {
+    return this.highscores.pipe(
+      map((highscores) => {
+        return highscores[mode];
+      })
+    );
   }
 
   public setHighscore(score: number, mode: 'dec' | 'hex') {
-    const currentHighscore = this.getHighscore(mode);
+    const highscores = this.highscores$.getValue();
 
-    if (score > currentHighscore) {
-      this.highscores[mode] = score;
+    if (score > highscores[mode]) {
+      highscores[mode] = score;
+      this.highscores$.next(highscores);
     }
 
     if (score > 0) {
@@ -76,16 +83,20 @@ export class HighscoreService {
         })
       )
       .subscribe((res: any) => {
+        const highscores = this.highscores$.getValue();
+
         for (const stat of res.statistics) {
           switch (stat.key) {
             case 'decScore':
-              this.highscores.dec = stat.value;
+              highscores.dec = stat.value;
               break;
             case 'hexScore':
-              this.highscores.hex = stat.value;
+              highscores.hex = stat.value;
               break;
           }
         }
+
+        this.highscores$.next(highscores);
       });
   }
 

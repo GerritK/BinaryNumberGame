@@ -2,7 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GameService} from '../../services/game.service';
 import {Subject} from 'rxjs';
 import {HighscoreService} from '../../services/highscore.service';
-import {takeUntil} from 'rxjs/operators';
+import {map, takeUntil} from 'rxjs/operators';
+import {Observable} from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'bng-game-view',
@@ -19,7 +20,7 @@ export class GameViewComponent implements OnInit, OnDestroy {
   public isRunning = false;
   public remainingTime: number;
   public score: number;
-  public highscore: number;
+  public highscore: Observable<number>;
 
   public userNumber = 0;
   public correctNumber = false;

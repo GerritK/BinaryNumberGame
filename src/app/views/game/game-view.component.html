@@ -3,7 +3,7 @@
 </bng-display>
 
 <div class="big-number" *ngIf="mode === 'highscore'">
-  {{highscore}}
+  {{highscore | async}}
   <div class="description">Your Highscore</div>
 </div>
 
