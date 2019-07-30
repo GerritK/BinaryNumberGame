@@ -1,7 +1,9 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-body {
-  margin: 0;
+bng-app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .mat-card, .mat-toolbar .mat-toolbar-row {
@@ -10,8 +12,10 @@ body {
 }
 
 #content {
+  margin-top: 40px;
   text-align: center;
 }
+
 
 .big-number {
   margin: 0.5em 0;
