@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Submit your score!</h1>
+<div mat-dialog-content>
+  <p>Please enter your name to get on the leaderboards.</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="username" placeholder="Username">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="username" color="primary" cdkFocusInitial>Confirm</button>
+</div>

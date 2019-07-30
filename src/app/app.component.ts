@@ -16,6 +16,10 @@ export class AppComponent {
     {
       label: 'Game',
       path: '/game',
+    },
+    {
+      label: 'Leaderboard',
+      path: '/leaderboard',
     }
   ];
 
