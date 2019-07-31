@@ -161,6 +161,8 @@ export class HighscoreService {
       client_secret: HighscoreService.CLIENT_SECRET
     }).pipe(
       map((res: any) => {
+        setTimeout(() => this.token = null, res.expires_in * 1000);
+
         this.token = res.access_token;
         return this.token;
       })
