@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {flatMap, map} from 'rxjs/operators';
+import {first, flatMap, map, skip, skipWhile} from 'rxjs/operators';
 import {MatDialog} from '@angular/material';
 import {UsernameDialogComponent} from '../dialogs/username-dialog/username-dialog.component';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
@@ -12,13 +12,15 @@ export class HighscoreService {
   private static readonly CLIENT_ID = 'fI3t9G0dZTdm0z85umwHpRsxOkPE7JdmrhPBXPOW';
   private static readonly CLIENT_SECRET = '1jJBsO5OlNedfM1ABGHkU4MbTn9Jb5sdpbPR0VGl';
 
+  private readonly token$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   private readonly highscores$: BehaviorSubject<any> = new BehaviorSubject<any>({
     dec: 0,
     hex: 0
   });
   public readonly highscores: Observable<any> = this.highscores$.asObservable();
 
-  private token: string;
+  private tokenTimeout: number;
+  private requestingToken: boolean;
 
   constructor(private http: HttpClient,
               private dialog: MatDialog) {
@@ -150,22 +152,29 @@ export class HighscoreService {
   }
 
   private getToken(): Observable<string> {
-    if (this.token != null) {
-      return of(this.token);
+    if (this.token$.getValue() != null) {
+      return of(this.token$.getValue());
     }
 
-    return this.http.post(HighscoreService.STATS_API + 'oauth/access_token', {
-      grant_type: 'client_credentials',
-      scope: 'endpoint_client',
-      client_id: HighscoreService.CLIENT_ID,
-      client_secret: HighscoreService.CLIENT_SECRET
-    }).pipe(
-      map((res: any) => {
-        setTimeout(() => this.token = null, res.expires_in * 1000);
+    if (!this.requestingToken) {
+      this.requestingToken = true;
 
-        this.token = res.access_token;
-        return this.token;
-      })
-    );
+      this.http.post(HighscoreService.STATS_API + 'oauth/access_token', {
+        grant_type: 'client_credentials',
+        scope: 'endpoint_client',
+        client_id: HighscoreService.CLIENT_ID,
+        client_secret: HighscoreService.CLIENT_SECRET
+      }).subscribe((res: any) => {
+        if (this.tokenTimeout != null) {
+          clearTimeout(this.tokenTimeout);
+        }
+        this.tokenTimeout = setTimeout(() => this.token$.next(null), res.expires_in * 1000);
+
+        this.token$.next(res.access_token);
+        this.requestingToken = false;
+      });
+    }
+
+    return this.token$.pipe(skipWhile((token) => token == null), first());
   }
 }
