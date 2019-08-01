@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {first, flatMap, map, skip, skipWhile} from 'rxjs/operators';
+import {first, flatMap, map, skipWhile} from 'rxjs/operators';
 import {MatDialog} from '@angular/material';
 import {UsernameDialogComponent} from '../dialogs/username-dialog/username-dialog.component';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import * as moment from 'moment';
+import {Moment} from 'moment';
 
 @Injectable()
 export class HighscoreService {
@@ -19,7 +21,7 @@ export class HighscoreService {
   });
   public readonly highscores: Observable<any> = this.highscores$.asObservable();
 
-  private tokenTimeout: number;
+  private tokenExpiration: Moment;
   private requestingToken: boolean;
 
   constructor(private http: HttpClient,
@@ -152,12 +154,13 @@ export class HighscoreService {
   }
 
   private getToken(): Observable<string> {
-    if (this.token$.getValue() != null) {
+    if (this.token$.getValue() != null && this.tokenExpiration.isAfter(moment())) {
       return of(this.token$.getValue());
     }
 
     if (!this.requestingToken) {
       this.requestingToken = true;
+      const start = moment();
 
       this.http.post(HighscoreService.STATS_API + 'oauth/access_token', {
         grant_type: 'client_credentials',
@@ -165,12 +168,8 @@ export class HighscoreService {
         client_id: HighscoreService.CLIENT_ID,
         client_secret: HighscoreService.CLIENT_SECRET
       }).subscribe((res: any) => {
-        if (this.tokenTimeout != null) {
-          clearTimeout(this.tokenTimeout);
-        }
-        this.tokenTimeout = setTimeout(() => this.token$.next(null), res.expires_in * 1000);
-
         this.token$.next(res.access_token);
+        this.tokenExpiration = start.add(res.expires_in, 'seconds');
         this.requestingToken = false;
       });
     }
