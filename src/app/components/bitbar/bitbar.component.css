@@ -8,9 +8,13 @@
   font-weight: bold;
 }
 
-:host ::ng-deep .mat-button-toggle-label-content {
+:host ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
   width: 20px;
-  line-height: 20px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+}
+
+@media screen and (max-width: 599px) {
+  :host ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    padding: 0 9px;
+    min-width: 20px;
+  }
 }
