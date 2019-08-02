@@ -1,6 +1,7 @@
 :host {
   display: block;
   overflow: auto;
+  margin: 0 -16px;
 }
 
 .bit {
@@ -12,9 +13,14 @@
   width: 20px;
 }
 
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 375px) {
+  :host ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    padding: 0 10px;
+  }
+}
+
+@media screen and (max-width: 335px) {
   :host ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
     padding: 0 9px;
-    min-width: 20px;
   }
 }
