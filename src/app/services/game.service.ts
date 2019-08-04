@@ -3,7 +3,8 @@ import {Subscription, BehaviorSubject, interval} from 'rxjs';
 
 @Injectable()
 export class GameService {
-  private limit = 256;
+  public readonly limit = 256;
+
   private remainingTimerSub: Subscription;
 
   public currentNumber: BehaviorSubject<number> = new BehaviorSubject(-1);

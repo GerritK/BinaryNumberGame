@@ -16,7 +16,7 @@
   {{useHex ? 'Hex' : 'Dec'}}
 </mat-slide-toggle>
 
-<bng-bitbar [(value)]="userNumber" [disabled]="!isRunning || correctNumber" (valueChange)="checkNumber()"></bng-bitbar>
+<bng-bitbar [(value)]="userNumber" [disabled]="!isRunning || correctNumber" (valueChange)="checkNumber()" [limit]="limit"></bng-bitbar>
 
 <button mat-raised-button (click)="startGame()" color="primary" *ngIf="mode === 'highscore'">Start</button>
 <button mat-raised-button (click)="stopGame()" color="warn" *ngIf="mode === 'game'">Stop</button>

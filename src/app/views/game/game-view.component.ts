@@ -26,6 +26,10 @@ export class GameViewComponent implements OnInit, OnDestroy {
   public correctNumber = false;
   public useHex = false;
 
+  public get limit(): number {
+    return this.gameService.limit;
+  }
+
   constructor(private gameService: GameService,
               private highscoreService: HighscoreService) {
   }

@@ -4,7 +4,7 @@
   {{useHex ? 'Hex' : 'Dec'}}
 </mat-slide-toggle>
 
-<bng-bitbar [(value)]="currentNumber"></bng-bitbar>
+<bng-bitbar [(value)]="currentNumber" [limit]="256"></bng-bitbar>
 
 <div class="text-left">
   <p>
