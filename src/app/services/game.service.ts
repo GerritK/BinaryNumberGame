@@ -36,6 +36,7 @@ export class GameService {
         .subscribe(() => this.calculateRemainingTime());
     }
 
+    this.endOfTime.next(new Date().getTime() + 120 * 1000);
     this.nextNumber();
   }
 
@@ -48,12 +49,6 @@ export class GameService {
   public nextNumber() {
     if (this.isRunning.getValue()) {
       this.currentNumber.next(Math.floor(Math.random() * (this.limit - 1)) + 1);
-
-      if (this.score.getValue() === -1) {
-        this.endOfTime.next(new Date().getTime() + 30 * 1000);
-      } else {
-        this.endOfTime.next(new Date().getTime() + 5.5 * 1000 + this.remainingTime.getValue());
-      }
 
       this.score.next(this.score.getValue() + 1);
     }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {first, flatMap, map, skipWhile} from 'rxjs/operators';
 import {MatDialog} from '@angular/material';
@@ -101,7 +101,7 @@ export class HighscoreService {
         }
 
         this.highscores$.next(highscores);
-      });
+      }, (err) => this.onError(err));
   }
 
   private submitHighscore(score: number, mode: 'dec' | 'hex') {
@@ -150,7 +150,7 @@ export class HighscoreService {
         if (res._id) {
           localStorage.setItem('userStatistics', res._id);
         }
-      });
+      }, (err) => this.onError(err));
   }
 
   private getToken(): Observable<string> {
@@ -175,5 +175,14 @@ export class HighscoreService {
     }
 
     return this.token$.pipe(skipWhile((token) => token == null), first());
+  }
+
+  private onError(err: HttpErrorResponse) {
+    if (err.status === 401) {
+      this.token$.next(null);
+      this.tokenExpiration = null;
+    }
+
+    console.error(err);
   }
 }
