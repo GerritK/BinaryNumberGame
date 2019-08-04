@@ -48,7 +48,12 @@ export class GameService {
 
   public nextNumber() {
     if (this.isRunning.getValue()) {
-      this.currentNumber.next(Math.floor(Math.random() * (this.limit - 1)) + 1);
+      let newNumber;
+      do {
+        newNumber = Math.floor(Math.random() * (this.limit - 1)) + 1;
+      } while (newNumber === this.currentNumber.getValue());
+
+      this.currentNumber.next(newNumber);
 
       this.score.next(this.score.getValue() + 1);
     }
