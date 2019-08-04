@@ -25,6 +25,18 @@ export class HighscoreService {
   private tokenExpiration: Moment;
   private requestingToken: boolean;
 
+  public get userId(): string {
+    return localStorage.getItem(HighscoreService.LOCALSTORAGE_KEY);
+  }
+
+  public set userId(value: string) {
+    if (value == null || value.length === 0) {
+      localStorage.removeItem(HighscoreService.LOCALSTORAGE_KEY);
+    } else {
+      localStorage.setItem(HighscoreService.LOCALSTORAGE_KEY, value);
+    }
+  }
+
   constructor(private http: HttpClient,
               private dialog: MatDialog) {
     this.loadHighscore();
@@ -69,7 +81,7 @@ export class HighscoreService {
   }
 
   private loadHighscore() {
-    const statisticsId = localStorage.getItem(HighscoreService.LOCALSTORAGE_KEY);
+    const statisticsId = this.userId;
 
     if (!statisticsId) {
       return;
@@ -115,7 +127,7 @@ export class HighscoreService {
             }
           };
 
-          const statisticsId = localStorage.getItem(HighscoreService.LOCALSTORAGE_KEY);
+          const statisticsId = this.userId;
           const values: any = {};
 
           if (mode === 'dec') {
@@ -149,7 +161,7 @@ export class HighscoreService {
       )
       .subscribe((res: any) => {
         if (res._id) {
-          localStorage.setItem(HighscoreService.LOCALSTORAGE_KEY, res._id);
+          this.userId = res._id;
         }
       }, (err) => this.onError(err));
   }
@@ -183,7 +195,7 @@ export class HighscoreService {
       this.token$.next(null);
       this.tokenExpiration = null;
     } else if (err.status === 401) {
-      localStorage.removeItem(HighscoreService.LOCALSTORAGE_KEY);
+      this.userId = null;
     }
 
     console.error(err);

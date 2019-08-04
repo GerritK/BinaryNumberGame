@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Submit your score!</h1>
+<div mat-dialog-content class="mat-typography">
+  <p>If you already have a UserID, you can insert it here or save the UserID here and transfer it to other devices.</p>
+
+  <mat-form-field style="width: 100%">
+    <input matInput [formControl]="formControl" placeholder="UserID">
+    <mat-error *ngIf="formControl.getError('required')">UserID is required</mat-error>
+    <mat-error *ngIf="formControl.getError('pattern')">Invalid UserID</mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="delete()" color="warn">Delete</button>
+  <button mat-button (click)="save()" color="primary" cdkFocusInitial
+          [disabled]="formControl.invalid">
+    Confirm
+  </button>
+</div>

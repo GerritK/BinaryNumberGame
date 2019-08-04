@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -25,6 +25,7 @@ import {HighscoreService} from './services/highscore.service';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import {A11yModule} from '@angular/cdk/a11y';
+import {UserIdDialogComponent} from './dialogs/userid-dialog/user-id-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,10 +39,12 @@ import {A11yModule} from '@angular/cdk/a11y';
     DisplayComponent,
     TimerComponent,
 
-    UsernameDialogComponent
+    UsernameDialogComponent,
+    UserIdDialogComponent
   ],
   entryComponents: [
-    UsernameDialogComponent
+    UsernameDialogComponent,
+    UserIdDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,8 @@ import {A11yModule} from '@angular/cdk/a11y';
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule
+    MatTableModule,
+    ReactiveFormsModule
   ],
   providers: [
     GameService,
