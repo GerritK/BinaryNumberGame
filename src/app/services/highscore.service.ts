@@ -13,6 +13,7 @@ export class HighscoreService {
   private static readonly STATS_API = 'https://api.globalstats.io/';
   private static readonly CLIENT_ID = 'fI3t9G0dZTdm0z85umwHpRsxOkPE7JdmrhPBXPOW';
   private static readonly CLIENT_SECRET = '1jJBsO5OlNedfM1ABGHkU4MbTn9Jb5sdpbPR0VGl';
+  private static readonly LOCALSTORAGE_KEY = 'userId';
 
   private readonly token$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   private readonly highscores$: BehaviorSubject<any> = new BehaviorSubject<any>({
@@ -68,7 +69,7 @@ export class HighscoreService {
   }
 
   private loadHighscore() {
-    const statisticsId = localStorage.getItem('userStatistics');
+    const statisticsId = localStorage.getItem(HighscoreService.LOCALSTORAGE_KEY);
 
     if (!statisticsId) {
       return;
@@ -114,7 +115,7 @@ export class HighscoreService {
             }
           };
 
-          const statisticsId = localStorage.getItem('userStatistics');
+          const statisticsId = localStorage.getItem(HighscoreService.LOCALSTORAGE_KEY);
           const values: any = {};
 
           if (mode === 'dec') {
@@ -148,7 +149,7 @@ export class HighscoreService {
       )
       .subscribe((res: any) => {
         if (res._id) {
-          localStorage.setItem('userStatistics', res._id);
+          localStorage.setItem(HighscoreService.LOCALSTORAGE_KEY, res._id);
         }
       }, (err) => this.onError(err));
   }
@@ -181,6 +182,8 @@ export class HighscoreService {
     if (err.status === 401) {
       this.token$.next(null);
       this.tokenExpiration = null;
+    } else if (err.status === 401) {
+      localStorage.removeItem(HighscoreService.LOCALSTORAGE_KEY);
     }
 
     console.error(err);
