@@ -1,0 +1,43 @@
+image: node:lts
+
+stages:
+  - lint
+  - build
+  - deploy
+
+.build:
+  stage: build
+  before_script:
+    - npm ci
+
+.deploy:
+  stage: deploy
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq lftp
+
+lint:
+  stage: lint
+  script:
+    - npm ci
+    - npm run lint
+    - npm run build
+  except:
+    - master
+
+build:prod:
+  extends: .build
+  script:
+    - npm run build:prod
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - dist/
+  only:
+    - master
+
+deploy:prod:
+  extends: .deploy
+  script:
+    - lftp -c "set ftp:ssl-allow no; open -u $USERNAME,$PASSWORD $HOST; mirror -Rev dist/ ./ --transfer-all --parallel=10 --exclude-glob .git* --exclude .git/"
+  only:
+    - master
