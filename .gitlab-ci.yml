@@ -38,6 +38,6 @@ build:prod:
 deploy:prod:
   extends: .deploy
   script:
-    - lftp -c "set ftp:ssl-allow no; open -u $USERNAME,$PASSWORD $HOST; mirror -Rev dist/ ./ --transfer-all --parallel=10 --exclude-glob .git* --exclude .git/"
+    - lftp -c "set ftp:ssl-allow no; open -u $USERNAME,$PASSWORD $HOST; mirror -Rev dist/ ./ --transfer-all --parallel=10 --exclude-glob .git* --exclude .git/ --exclude .htaccess"
   only:
     - master
